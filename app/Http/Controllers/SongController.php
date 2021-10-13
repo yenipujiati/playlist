@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Model\Song;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SongController extends Controller
 {
@@ -15,7 +17,7 @@ class SongController extends Controller
      */
     public function getAll() {
         $songs = Song::all();
-        return response()->json($songs);
+        return $this->successResponse(['songs' => $songs]);
     }
 
     /**
@@ -25,7 +27,10 @@ class SongController extends Controller
      */
     public function getById($id) {
         $song = Song::find($id);
-        return response()->json($song);
+        if ($song == NULL) {
+            throw new NotFoundHttpException();
+        }
+        return $this->successResponse(['song' => $song]);
     }
 
     /**
@@ -33,6 +38,20 @@ class SongController extends Controller
      * @return JsonResponse
      */
     public function create() {
+
+        /*validasi*/
+        $validate = Validator::make(request()->all(),[
+           'title' => 'required',
+           'year' => 'required|numeric',
+            'artist' => 'required',
+            'gendre' => 'required',
+            'duration' => 'required',
+            'role'=>'superadmin',
+        ]);
+        if ($validate->fails()) {
+            return $this->failedResponse($validate->errors()->getMessages(),400);
+        }
+
         $song = new Song();
         $song->title = request('title');
         $song->year = request('year');
@@ -40,7 +59,7 @@ class SongController extends Controller
         $song->gendre = request('gendre');
         $song->duration = request('duration');
         $song->save();
-        return response()->json($song,201);
+        return $this->successResponse(['song' => $song],201);
     }
 
     /**
@@ -50,18 +69,45 @@ class SongController extends Controller
      */
     public function update($id) {
         $song = Song::find($id);
+        if ($song == NULL) {
+            throw new NotFoundHttpException();
+        }
+
+        $validate = Validator::make(request()->all(),[
+            'title' => 'required',
+            'year' => 'required|numeric',
+            'artist' => 'required',
+            'gendre' => 'required',
+            'duration' => 'required',
+            'role'=>'superadmin',
+        ]);
+        if ($validate->fails()) {
+            return $this->failedResponse($validate->errors()->getMessages(),400);
+        }
+
         $song->title = request('title');
         $song->year = request('year');
         $song->artist = request('artist');
         $song->gendre = request('gendre');
         $song->duration = request('duration');
         $song->save();
-        return response()->json($song,201);
+        return $this->successResponse(['songs' => $song]);
     }
 
     public function delete($id) {
         $song = Song::find($id);
+        if ($song == NULL) {
+            throw new NotFoundHttpException();
+        }
+
+        $validate = Validator::make(request()->all(),[
+            'role'=>'superadmin',
+        ]);
+        if ($validate->fails()) {
+            return $this->failedResponse($validate->errors()->getMessages(),400);
+        }
+
         $song->delete();
-        return response()->json("Sukses Dihapus");
+        return $this->successResponse(['songs' => 'Data berhasil dihapus']);
     }
 }
