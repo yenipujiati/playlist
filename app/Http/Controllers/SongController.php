@@ -4,12 +4,13 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Controllers\Base\PbeBaseController;
 use App\Model\Song;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class SongController extends Controller
+class SongController extends PbeBaseController
 {
     /**
      * Function untuk menampilkan semua data pada table songs

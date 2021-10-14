@@ -17,7 +17,9 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix'=>'api/v1'], function ($router) {
+$router->post('api/v1/login', 'Auth\LoginController@verify');
+
+$router->group(['prefix' => 'api/v1', 'middleware' => 'pbe.auth'], function ($router) {
     $router->get('/songs','SongController@getAll');
     $router->get('/songs/{id}','SongController@getById');
     $router->post('/songs','SongController@create');
