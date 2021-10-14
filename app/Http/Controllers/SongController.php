@@ -47,7 +47,6 @@ class SongController extends PbeBaseController
             'artist' => 'required',
             'gendre' => 'required',
             'duration' => 'required',
-            'role'=>'superadmin',
         ]);
         if ($validate->fails()) {
             return $this->failedResponse($validate->errors()->getMessages(),400);
@@ -80,7 +79,6 @@ class SongController extends PbeBaseController
             'artist' => 'required',
             'gendre' => 'required',
             'duration' => 'required',
-            'role'=>'superadmin',
         ]);
         if ($validate->fails()) {
             return $this->failedResponse($validate->errors()->getMessages(),400);
@@ -99,13 +97,6 @@ class SongController extends PbeBaseController
         $song = Song::find($id);
         if ($song == NULL) {
             throw new NotFoundHttpException();
-        }
-
-        $validate = Validator::make(request()->all(),[
-            'role'=>'superadmin',
-        ]);
-        if ($validate->fails()) {
-            return $this->failedResponse($validate->errors()->getMessages(),400);
         }
 
         $song->delete();

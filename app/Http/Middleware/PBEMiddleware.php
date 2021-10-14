@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Exceptions\PbeNotAuthenticatedException;
+use App\User;
 use Closure;
 
 class PBEMiddleware
@@ -22,6 +23,17 @@ class PBEMiddleware
                 'message' => 'Anda tidak terautentikasi',
             ],401);
         }
+
+        $token = request()->header('api_token');
+        $user = User::where('api_token', '=', $token)->first();
+        if ($user == null) {
+//            throw new PbeNotAuthenticatedException();
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Anda tidak terautentikasi',
+            ],401);
+        }
+        $request->user = $user;
         return $next($request);
     }
 }
