@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Exceptions\PbeNotAuthenticatedException;
+use App\Model\Playlist;
 use App\User;
 use Closure;
 
@@ -34,6 +35,7 @@ class PBEMiddleware
             ],401);
         }
         $request->user = $user;
+        $request->playlist = $user;
         return $next($request);
     }
 }

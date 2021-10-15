@@ -13,19 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class PlaylistController extends PbeBaseController
 {
 
-    public function getAll() {
-        $playlists = Playlist::all();
-        return $this->successResponse(['playlists' => $playlists]);
-    }
-
-    public function getById($user_id) {
-        $playlist = Playlist::find($user_id);
-        if ($playlist == NULL) {
-            throw new NotFoundHttpException();
-        }
-        return $this->successResponse(['playlist' => $playlist]);
-    }
-
+    #membuat (post) playlist dari user yang sedang login
     public function create() {
 
         /*validasi*/
