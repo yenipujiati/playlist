@@ -80,6 +80,7 @@ $app->configure('app');
      'pbe.auth' => App\Http\Middleware\PBEMiddleware::class,
      'pbe.superadmin' => App\Http\Middleware\PbeSuperadminMiddleware::class,
      'pbe.user' => App\Http\Middleware\PbeUserMiddleware::class,
+     'pbe.id_user' => App\Http\Middleware\PbeCekIdUserMiddleware::class,
  ]);
 
 /*

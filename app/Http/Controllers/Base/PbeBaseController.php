@@ -15,7 +15,7 @@ abstract class PbeBaseController extends BaseController
 //        if ($user == NULL) {
 //            throw new PbeNotAuthenticatedException();
 //        }
-//        dd(request()->user->role);
+//        dd(request()->user->id);
     }
 
     protected function successResponse(array $data, int $httpCode = 200) {
