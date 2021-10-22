@@ -10,7 +10,7 @@ class PbeCekIdUserMiddleware
 {
     public function handle($request, Closure $next)
     {
-        if ($request->user->id != $request->playlist->user_id) {
+        if (request()->user->id != request()->playlist->user_id) {
 //            throw new PbeNotAuthorizedException();
             return response()->json([
                 'status' => 'failed',

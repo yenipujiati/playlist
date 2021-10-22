@@ -30,4 +30,13 @@ class PlaylistController extends PbeBaseController
         $playlist->save();
         return $this->successResponse(['playlist' => $playlist],201);
     }
+
+    public function getAll() {
+        if (request()->user->id != request('user_id')){
+            throw new NotFoundHttpException();
+        }else{
+            $playlists = Playlist::all();
+            return $this->successResponse(['playlists' => $playlists]);
+        }
+    }
 }

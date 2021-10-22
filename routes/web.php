@@ -54,7 +54,7 @@ $router->group(['prefix' => 'api/v1', 'middleware' => 'pbe.auth'], function ($ro
 
             #Playlists Table
             #get playlist berdasarkan user id tertentu
-            $router->get('/users/{id}/playlists','PlaylistController@getById');
+//            $router->get('/users/{id}/playlists','PlaylistController@getById');
             #get lagu dari playlists dengan id tertentu dari user dengan id tertentu
 //          $router->get('/users/{id}/playlists/{playlistId}/songs','PlaylistController@');
 
@@ -71,7 +71,7 @@ $router->group(['prefix' => 'api/v1', 'middleware' => 'pbe.auth'], function ($ro
         #membuat (post) playlist dari user yang sedang login
         $router->post('/playlists','PlaylistController@create');
 
-        $router->group(['middleware' => 'pbe.id_user'], function ($router) {
+//        $router->group(['middleware' => 'pbe.id_user'], function ($router) {
 
             #Playlists Table
             #get playlist yang dimiliki oleh user yang sedang login/dirinya sendiri
@@ -85,5 +85,5 @@ $router->group(['prefix' => 'api/v1', 'middleware' => 'pbe.auth'], function ($ro
 //          #get semua lagu yang ada di dalam playlist ((validasi pemilik playlist))
 //          $router->post('/playlists/{id}/songs','PlaylistsongController@');
         });
-    });
+//    });
 });

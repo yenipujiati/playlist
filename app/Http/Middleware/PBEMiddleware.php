@@ -35,7 +35,6 @@ class PBEMiddleware
             ],401);
         }
         $request->user = $user;
-        $request->playlist = $user;
         return $next($request);
     }
 }
